@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Door Opener</title>
+</head>
+<body>
+    <label for="servo-angle">Servo Angle:</label>
+    <input type="range" id="servo-angle" min="0" max="180">
+
+    <script>
+        const slider = document.getElementById('servo-angle');
+        let timeoutId = null;
+
+        const debounce = (func, delay) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(func, delay);
+        };
+
+        slider.addEventListener('input', () => {
+            debounce(() => {
+                const angle = slider.value;
+                const url = `${window.location.origin}/turn?angle=${angle}`;
+
+                fetch(url)
+                    .then(response => console.log)
+                    .catch(error => {
+                        console.log('Error:', error);
+                    });
+            }, 1000); // Delay of 1 second (1000 milliseconds)
+        });
+    </script>
+</body>
+</html>
